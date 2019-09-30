@@ -3,6 +3,7 @@ using Plugin.PushNotification.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using UIKit;
 using UserNotifications;
@@ -264,16 +265,12 @@ namespace Plugin.PushNotification
 
         public static void DidRegisterRemoteNotifications(NSData deviceToken)
         {
-            string trimmedDeviceToken = deviceToken.Description;
-            if (!string.IsNullOrWhiteSpace(trimmedDeviceToken))
-            {
-                trimmedDeviceToken = trimmedDeviceToken.Trim('<');
-                trimmedDeviceToken = trimmedDeviceToken.Trim('>');
-                trimmedDeviceToken = trimmedDeviceToken.Trim();
-                trimmedDeviceToken = trimmedDeviceToken.Replace(" ", "");
-            }
-            NSUserDefaults.StandardUserDefaults.SetString(trimmedDeviceToken, TokenKey);
-            _onTokenRefresh?.Invoke(CrossPushNotification.Current, new PushNotificationTokenEventArgs(trimmedDeviceToken));
+            byte[] bytes = new byte[deviceToken.Length];
+            Marshal.Copy(deviceToken.Bytes, bytes, 0, (int)deviceToken.Length);
+
+            string token = string.Join("", bytes.Select(b => b.ToString("x2")));
+            NSUserDefaults.StandardUserDefaults.SetString(token, TokenKey);
+            _onTokenRefresh?.Invoke(CrossPushNotification.Current, new PushNotificationTokenEventArgs(token));
         }
 
         public static void DidReceiveMessage(NSDictionary data)
