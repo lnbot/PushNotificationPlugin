@@ -63,5 +63,16 @@ namespace Plugin.PushNotification
             PushNotificationManager.RegisterData(parameters);
             CrossPushNotification.Current.NotificationHandler?.OnReceived(parameters);
         }
+
+        public override void OnNewToken(string refreshedToken)
+        {
+            var editor = Android.App.Application.Context.GetSharedPreferences(PushNotificationManager.KeyGroupName, FileCreationMode.Private).Edit();
+            editor.PutString(PushNotificationManager.TokenKey, refreshedToken);
+            editor.Commit();
+
+            // CrossPushNotification.Current.OnTokenRefresh?.Invoke(this,refreshedToken);
+            PushNotificationManager.RegisterToken(refreshedToken);
+            System.Diagnostics.Debug.WriteLine($"REFRESHED TOKEN: {refreshedToken}");
+        }
     }
 }
