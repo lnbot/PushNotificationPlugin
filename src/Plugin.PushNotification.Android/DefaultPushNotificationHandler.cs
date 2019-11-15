@@ -114,6 +114,14 @@ namespace Plugin.PushNotification
         /// </summary>
         public const string ChannelIdKey = "android_channel_id";
 
+        private const string FirebaseDefaultIconKey = "com.google.firebase.messaging.default_notification_icon";
+
+        private int GetDefaultIcon(Context context)
+        {
+            Bundle metaData = context.PackageManager.GetApplicationInfo(context.PackageName, PackageInfoFlags.MetaData).MetaData;
+            return metaData.GetInt(FirebaseDefaultIconKey, context.ApplicationInfo.Icon);
+        }
+
         public void OnOpened(NotificationResponse response)
         {
             System.Diagnostics.Debug.WriteLine($"{DomainTag} - OnOpened");
@@ -221,17 +229,17 @@ namespace Plugin.PushNotification
                 }
 
                 if (PushNotificationManager.IconResource == 0)
-                    PushNotificationManager.IconResource = context.ApplicationInfo.Icon;
+                    PushNotificationManager.IconResource = GetDefaultIcon(context);
                 else
                 {
                     string name = context.Resources.GetResourceName(PushNotificationManager.IconResource);
                     if (name == null)
-                        PushNotificationManager.IconResource = context.ApplicationInfo.Icon;
+                        PushNotificationManager.IconResource = GetDefaultIcon(context);
                 }
             }
             catch (Resources.NotFoundException ex)
             {
-                PushNotificationManager.IconResource = context.ApplicationInfo.Icon;
+                PushNotificationManager.IconResource = GetDefaultIcon(context);
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
 
