@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras/2.0.41">
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;MonoAndroid90;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20;</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid12.0;Xamarin.Mac20;</TargetFrameworks>
         <!--<TargetFrameworks Condition=" $(OS) == 'WINDOWS_NT' ">uap10.0.16299;$(TargetFrameworks)</TargetFrameworks>-->
         <AssemblyName>Plugin.PushNotification</AssemblyName>
         <RootNamespace>Plugin.PushNotification</RootNamespace>
         <PackageId>Plugin.PushNotification</PackageId>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
-        <AssemblyVersion>3.6.9.1</AssemblyVersion>
-        <AssemblyFileVersion>3.4.3</AssemblyFileVersion>
-        <Version>3.6.9.1</Version>
+        <AssemblyVersion>3.6.9.3</AssemblyVersion>
+        <AssemblyFileVersion>3.6.9.3</AssemblyFileVersion>
+        <Version>3.6.9.3</Version>
         <PackOnBuild>true</PackOnBuild>
         <NeutralLanguage>en</NeutralLanguage>
         <LangVersion>default</LangVersion>
@@ -60,11 +60,11 @@
         <Compile Include="**\*.uwp.*.cs" />
     </ItemGroup>
     <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-        <PackageReference Include="Xamarin.Firebase.Messaging" Version="122.0.0.3" />
-        <PackageReference Include="Xamarin.GooglePlayServices.Basement" Version="117.6.0.4" />
+        <PackageReference Include="Xamarin.Firebase.Messaging" Version="122.0.0.6" />
+        <PackageReference Include="Xamarin.GooglePlayServices.Basement" Version="118.0.2.1" />
         <!-- fix nuget restore warnings and https://stackoverflow.com/questions/65381403/java-lang-noclassdeffounderror-when-implementing-firebase-cloud-messaging -->
-        <PackageReference Include="Xamarin.Google.Android.DataTransport.TransportRuntime" Version="3.0.1.1" />
-        <PackageReference Include="Xamarin.Google.Dagger" Version="2.39.1" />
+        <PackageReference Include="Xamarin.Google.Android.DataTransport.TransportRuntime" Version="3.1.4.1" />
+        <PackageReference Include="Xamarin.Google.Dagger" Version="2.41.0.1" />
         <Compile Include="**\*.android.cs" />
         <Compile Include="**\*.android.*.cs" />
     </ItemGroup>
