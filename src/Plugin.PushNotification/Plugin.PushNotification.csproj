@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras/2.0.41">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;MonoAndroid90;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20;</TargetFrameworks>
-        <TargetFrameworks Condition=" $(OS) == 'WINDOWS_NT' ">uap10.0.16299;$(TargetFrameworks)</TargetFrameworks>
+        <TargetFrameworks>net8.0-android;net8.0-ios;netstandard2.1;</TargetFrameworks>
         <AssemblyName>Plugin.PushNotification</AssemblyName>
         <RootNamespace>Plugin.PushNotification</RootNamespace>
         <PackageId>Plugin.PushNotification</PackageId>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
-        <AssemblyVersion>3.4.3</AssemblyVersion>
-        <AssemblyFileVersion>3.4.3</AssemblyFileVersion>
-        <Version>3.4.3</Version>
+        <AssemblyVersion>3.6.23.1</AssemblyVersion>
+        <AssemblyFileVersion>3.6.23.1</AssemblyFileVersion>
+        <Version>3.6.23.1</Version>
         <PackOnBuild>true</PackOnBuild>
         <NeutralLanguage>en</NeutralLanguage>
         <LangVersion>default</LangVersion>
@@ -59,7 +58,7 @@
         <Compile Include="**\*.uwp.cs" />
         <Compile Include="**\*.uwp.*.cs" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) Or $(TargetFramework.EndsWith('android')) ">
         <PackageReference Include="Xamarin.Firebase.Messaging" Version="122.0.0.3" />
         <PackageReference Include="Xamarin.GooglePlayServices.Basement" Version="117.6.0.4" />
         <!-- fix nuget restore warnings and https://stackoverflow.com/questions/65381403/java-lang-noclassdeffounderror-when-implementing-firebase-cloud-messaging -->
@@ -68,7 +67,7 @@
         <Compile Include="**\*.android.cs" />
         <Compile Include="**\*.android.*.cs" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) Or $(TargetFramework.EndsWith('ios')) ">
         <Compile Include="**\*.apple.cs" />
         <Compile Include="**\*.apple.*.cs" />
         <Compile Include="**\*.ios.cs" />

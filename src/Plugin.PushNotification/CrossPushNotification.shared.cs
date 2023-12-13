@@ -27,7 +27,7 @@ namespace Plugin.PushNotification
 
         static IPushNotification CreatePushNotification()
         {
-#if NETSTANDARD2_1
+#if NETSTANDARD
             return null;
 #else
             return new PushNotificationManager();
